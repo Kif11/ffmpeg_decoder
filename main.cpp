@@ -1,42 +1,15 @@
-/*
- * Copyright (c) 2001 Fabrice Bellard
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-/**
- * @file
- * video decoding with libavcodec API example
- *
- * @example decode_video.c
- */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 extern "C" {
-#include <libavcodec/avcodec.h>
+  #include <libavcodec/avcodec.h>
 }
 #include <iostream>
+
 #define INBUF_SIZE 4096
-static void pgm_save(unsigned char *buf, int wrap, int xsize, int ysize,
-                     char *filename)
-{
+
+static void pgm_save(unsigned char *buf, int wrap, int xsize, int ysize, char *filename) {
     FILE *f;
     int i;
     f = fopen(filename,"w");
@@ -50,9 +23,8 @@ static void pgm_save(unsigned char *buf, int wrap, int xsize, int ysize,
       fwrite(buf + i * wrap, 1, xsize, f);
     fclose(f);
 }
-static void decode(AVCodecContext *dec_ctx, AVFrame *frame, AVPacket *pkt,
-                   const char *filename)
-{
+
+static void decode(AVCodecContext *dec_ctx, AVFrame *frame, AVPacket *pkt, const char *filename) {
     char buf[1024];
     int ret;
     //feed input into the decoder
@@ -79,8 +51,8 @@ static void decode(AVCodecContext *dec_ctx, AVFrame *frame, AVPacket *pkt,
                  frame->width, frame->height, buf);
     }
 }
-int main(int argc, char **argv)
-{
+
+int main(int argc, char **argv) {
     const char *filename, *outfilename;
     const AVCodec *codec;
     AVCodecParserContext *parser;
